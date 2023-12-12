@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbgeApp", "IbgeApp\IbgeApp.csproj", "{80107C66-49C5-4828-973C-45E9E349290F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IbgeApp", "IbgeApp\IbgeApp.csproj", "{80107C66-49C5-4828-973C-45E9E349290F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbgeApp.Client", "IbgeApp.Client\IbgeApp.Client.csproj", "{6279EC5D-4377-4B13-9518-003BE6CE5D16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IbgeApp.Client", "IbgeApp.Client\IbgeApp.Client.csproj", "{6279EC5D-4377-4B13-9518-003BE6CE5D16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
