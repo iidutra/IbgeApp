@@ -2,6 +2,8 @@ using IbgeApp.Client.Pages;
 using IbgeApp.Components;
 using IbgeApp.Components.Account;
 using IbgeApp.Data;
+using IbgeApp.Interfaces;
+using IbgeApp.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,7 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
+builder.Services.AddScoped<IIbgeService, IbgeService>();
 
 builder.Services.AddAuthentication(options =>
     {
