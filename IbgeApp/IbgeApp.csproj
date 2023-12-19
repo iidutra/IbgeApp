@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Pages\Ibge\Create.razor" />
+    <Content Remove="Components\Pages\Ibge\Edit.razor" />
+    <Content Remove="Components\Pages\Ibge\Index.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\IbgeApp.Client\IbgeApp.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.0" />

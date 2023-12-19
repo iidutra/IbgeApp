@@ -1,0 +1,76 @@
+﻿/* Estilo Geral da Página */
+.localidades-page {
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Seção de Pesquisa */
+.search-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+    .search-section input,
+    .search-section button {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .search-section input {
+        flex-grow: 1;
+        max-width: calc(100% - 130px);
+        /* Ajuste para responsividade */
+    }
+
+/* Estilo dos Botões */
+button {
+    background-color: #4CAF50;
+    /* Cor verde */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+/* Tabela de Localidades */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+    .table th,
+    .table td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+    }
+
+    .table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .table tr:hover {
+        background-color: #ddd;
+    }
+
+/* Mensagem de Nenhuma Localidade */
+.no-locality {
+    color: #888;
+    margin-top: 20px;
+    font-style: italic;
+}

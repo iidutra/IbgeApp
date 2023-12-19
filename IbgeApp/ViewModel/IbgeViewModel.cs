@@ -14,7 +14,7 @@ namespace IbgeApp.ViewModel
         private ObservableCollection<Locality> _localities;
         private string _searchCity;
         private string _searchState;
-        private int _searchId;
+        private int? _searchId;
 
         // Construtor
         public IbgeViewModel(IIbgeService ibgeService)
@@ -56,7 +56,7 @@ namespace IbgeApp.ViewModel
             }
         }
 
-        public int SearchId
+        public int? SearchId
         {
             get => _searchId;
             set

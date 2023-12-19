@@ -1,7 +1,29 @@
 ﻿@page "/"
+@inject NavigationManager NavigationManager
 
-<PageTitle>Home</PageTitle>
+<h1>Bem-vindo ao Gerenciador de Localidades do IBGE</h1>
 
-<h1>Hello, world!</h1>
+<div class="home-intro">
+    <p>
+        Esta aplicação permite gerenciar informações de localidades do Brasil, incluindo cidades e estados.
+        Utilize as funcionalidades de CRUD para gerenciar dados, pesquise localidades e importe dados diretamente de um arquivo Excel.
+    </p>
+</div>
 
-Welcome to your new app.
+<div class="home-features">
+    <h2>Funcionalidades Principais</h2>
+    <ul>
+        <li><strong>Autenticação:</strong> Acesso seguro com Identity.</li>
+        <li><strong>CRUD de Localidades:</strong> Gerencie localidades (Código, Estado, Cidade).</li>
+        <li><strong>Pesquisa:</strong> Pesquise localidades por cidade, estado ou código IBGE.</li>
+        <li><strong>Importação de Dados:</strong> Importe dados de localidades a partir de um arquivo Excel.</li>
+    </ul>
+</div>
+
+
+@code {
+    private void NavigateTo(string route)
+    {
+        NavigationManager.NavigateTo($"/{route}");
+    }
+}

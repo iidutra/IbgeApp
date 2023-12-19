@@ -1,10 +1,9 @@
 ﻿@implements IDisposable
-
 @inject NavigationManager NavigationManager
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">IbgeApp</a>
+        <img class="" src="~/ibge.jpg" />
     </div>
 </div>
 
@@ -12,60 +11,55 @@
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
+        <!-- Home Link -->
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+                <span class="bi bi-house-door-fill" aria-hidden="true"></span> Home
             </NavLink>
         </div>
 
+        <!-- Localidades Link -->
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
+            <NavLink class="nav-link" href="localidades">
+                <span class="bi bi-map" aria-hidden="true"></span> Gerenciar Localidades
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="auth">
-                <span class="bi bi-lock-nav-menu" aria-hidden="true"></span> Auth Required
-            </NavLink>
-        </div>
-
+        <!-- Autenticação e Conta -->
         <AuthorizeView>
             <Authorized>
+                <!-- Link de Gerenciamento de Conta -->
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Account/Manage">
-                        <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
+                        <span class="bi bi-person-circle" aria-hidden="true"></span> @context.User.Identity?.Name
                     </NavLink>
                 </div>
+                <!-- Logout -->
                 <div class="nav-item px-3">
                     <form action="Account/Logout" method="post">
                         <AntiforgeryToken />
                         <input type="hidden" name="ReturnUrl" value="@currentUrl" />
                         <button type="submit" class="nav-link">
-                            <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
+                            <span class="bi bi-box-arrow-right" aria-hidden="true"></span> Logout
                         </button>
                     </form>
                 </div>
             </Authorized>
             <NotAuthorized>
+                <!-- Registro e Login -->
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Account/Register">
-                        <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
+                        <span class="bi bi-person-plus" aria-hidden="true"></span> Registrar
                     </NavLink>
                 </div>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Account/Login">
-                        <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
+                        <span class="bi bi-door-open" aria-hidden="true"></span> Login
                     </NavLink>
                 </div>
             </NotAuthorized>
         </AuthorizeView>
+
     </nav>
 </div>
 
@@ -89,4 +83,3 @@
         NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }
-

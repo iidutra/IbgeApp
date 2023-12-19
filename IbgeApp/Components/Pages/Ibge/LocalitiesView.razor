@@ -1,0 +1,46 @@
+﻿@page "/localidades"
+@inject IbgeApp.ViewModel.IbgeViewModel IbgeViewModel
+
+<h3>Gerenciamento de Localidades</h3>
+
+<!-- Seção de Pesquisa -->
+<div class="search-section">
+    <input @bind="IbgeViewModel.SearchCity" placeholder="Pesquisar por Cidade" />
+    <input @bind="IbgeViewModel.SearchState" placeholder="Pesquisar por Estado" />
+    <input @bind="IbgeViewModel.SearchId" placeholder="Pesquisar por IDD" />
+    <button @onclick="() => IbgeViewModel.SearchCommand.Execute(null)">Pesquisar</button>
+</div>
+
+<!-- Botão para Carregar Localidades -->
+<button @onclick="() => IbgeViewModel.LoadLocalitiesCommand.Execute(null)">Carregar Localidades</button>
+
+<!-- Botão para Importar Dados -->
+<button @onclick="() => IbgeViewModel.ImportExcelDataCommand.Execute(null)">Importar Dados do Excel</button>
+
+<!-- Tabela de Localidades -->
+@if (IbgeViewModel.Localities != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var locality in IbgeViewModel.Localities)
+            {
+                <tr>
+                    <td>@locality.Id</td>
+                    <td>@locality.City</td>
+                    <td>@locality.State</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nenhuma localidade carregada.</p>
+}
