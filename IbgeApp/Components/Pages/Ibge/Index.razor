@@ -1,10 +1,39 @@
 ﻿@page "/ibge"
 
-<h3>Index</h3>
+@rendermode InteractiveServer
+@inject ApplicationDbContext Context
+@attribute [StreamRendering(true)]
+
+<h1>Cidades</h1>
+
+<a href="/ibge/create" class="btn btn-primary mb-5 mt-3">Cadastrar Nova Cidade</a>
+@if(Cities == null)
+{
+    <p class="fw-bold text-danger">Nenhum registro encontrado</p>
+}
+else
+{
+    <div class="align-content-center">
+        <QuickGrid TGridItem="Ibge" Items="@Cities">
+            <PropertyColumn Property="@(i => i.Id)" Sortable="true" />
+            <PropertyColumn Property="@(i => i.City)" Sortable="true" />
+            <PropertyColumn Property="@(i => i.State)" Sortable="true" />
+        </QuickGrid>
+    </div>
+    <div class="pagination"></div>
+}
 
 @code {
-    [CascadingParameter]
-    private Task<AuthenticationState> authenticationState { get; set; }
+    //public Ibge Cities = new();
+    public IEnumerable<Ibge> Ibges { get; set; }
+    public IQueryable<Ibge> Cities { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Ibges = await Context.Ibge.AsNoTracking().ToListAsync();
+        Cities = Ibges.AsQueryable();
+    }
 
     private async Task DisplayGreetingAlert() {
         var authState = await authenticationState;
