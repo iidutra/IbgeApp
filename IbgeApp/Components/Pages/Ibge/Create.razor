@@ -1,1 +1,54 @@
-﻿
+﻿@page "/ibge/create"
+@inject ApplicationDbContext Context
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<h1>Cadastrar Cidade</h1>
+<EditForm Model="@ibge" OnValidSubmit="AddCityAsync" FormName="CreateCity">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="mb-3">
+        <label class="form-label">Informe a Código de Cadastro</label>
+        <InputNumber @bind-Value="ibge.Id" class="form-control mb-3" />
+               
+        <label class="form-label">Informe a Cidade</label>
+        <InputText @bind-Value="ibge.City" class="form-control mb-3" />
+        <ValidationMessage For="@(() => ibge.City)" />
+
+        <label class="form-label">Selecione o Estado</label>
+        <InputSelect @bind-Value="ibge.State">
+            @foreach (var state in _states)
+            {
+                <option value="@state.ToString()">@state.ToString()</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => ibge.State)" />
+        <br/>
+        <button type="submit" class="btn btn-primary mb-1">Salvar</button>
+        <a href="/ibge" class="btn btn-danger mb-1" role="button">Cancelar</a>
+    </div>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public Ibge ibge { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+
+    }
+
+    private static List<string> _states = new List<string>()
+    {
+        "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA",
+        "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
+        "RS", "RO", "RR", "SC", "SP", "SE", "TO"
+    };
+
+    public async Task AddCityAsync()
+    {
+        await Context.Ibge.AddAsync(ibge);
+        await Context.SaveChangesAsync();
+        Navigation.NavigateTo("ibge");
+    }
+}

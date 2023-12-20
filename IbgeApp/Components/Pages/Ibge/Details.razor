@@ -1,0 +1,38 @@
+﻿@page "/ibge/details/{id:int}"
+@inject ApplicationDbContext Context
+@rendermode InteractiveServer
+
+@if (city is null)
+{
+    <p class="text-center">Cidade não encontrada</p>
+    <a href="/ibge" class="btn btn-secondary mb-1" role="button">Voltar</a>
+}
+else
+{
+    <h1>Informações</h1>
+    <EditForm Model="@city" FormName="DetailIbge">
+        <div class="mb-3">
+            <label class="form-label">Id</label>
+            <InputNumber @bind-Value="city.Id" class="form-control" readonly />
+            <label class="form-label">Cidade</label>
+            <InputText @bind-Value="city.City" class="form-control" readonly />
+            <label class="form-label">Estado</label>
+            <InputText @bind-Value="city.State" class="form-control" readonly />
+
+        </div>
+        <a href="/ibge" class="btn btn-secondary mb-1" role="button">Voltar</a>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public Ibge? city { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        city = await Context.Ibge.AsNoTracking().FirstOrDefaultAsync(c => c.Id == Id);
+    }
+
+}

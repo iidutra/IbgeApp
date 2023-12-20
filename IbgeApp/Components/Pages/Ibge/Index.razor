@@ -14,20 +14,35 @@
 else
 {
     <div class="align-content-center">
-        <QuickGrid TGridItem="Ibge" Items="@Cities">
+        <QuickGrid TGridItem="Ibge" Items="@Cities" Pagination="@pagination">
             <PropertyColumn Property="@(i => i.Id)" Sortable="true" />
-            <PropertyColumn Property="@(i => i.City)" Sortable="true" />
-            <PropertyColumn Property="@(i => i.State)" Sortable="true" />
+            <PropertyColumn Property="@(i => i.City)" Sortable="true" Title="Cidade"/>
+            <PropertyColumn Property="@(i => i.State)" Sortable="true" Title="Estado"/>
+            <TemplateColumn Title="">
+                <a href="/edit/" class="btn btn-warning">Editar</a>
+            </TemplateColumn>
+            <TemplateColumn Title="">
+                <a href="/delete/" class="btn btn-danger">Excluir</a>
+            </TemplateColumn>
         </QuickGrid>
     </div>
-    <div class="pagination"></div>
+    <div class="pagination mx-3">
+        Cidades : 
+        <select @bind="@pagination.ItemsPerPage">
+            <option selected>20</option>
+            <option>50</option>
+            <option>100</option>
+        </select>
+    </div>
+    <Paginator State="@pagination" />
 }
 
 @code {
     //public Ibge Cities = new();
-    public IEnumerable<Ibge> Ibges { get; set; }
-    public IQueryable<Ibge> Cities { get; set; }
+    public IEnumerable<Ibge>? Ibges { get; set; }
+    public IQueryable<Ibge>? Cities { get; set; }
 
+    PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
 
     protected override async Task OnInitializedAsync()
     {
