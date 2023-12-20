@@ -1,6 +1,13 @@
 ﻿@page "/ibge"
+
 <h3>Index</h3>
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationState { get; set; }
 
+    private async Task DisplayGreetingAlert() {
+        var authState = await authenticationState;
+        var message = $"Hello {authState.User.Identity.Name}";
+    }
 }
