@@ -1,4 +1,4 @@
-﻿﻿@page "/ibge/delete/{id:int}"
+﻿@page "/ibge/delete/{id:int}"
 @inject ApplicationDbContext Context
 @inject NavigationManager Navigation
 @rendermode InteractiveServer
@@ -14,7 +14,7 @@ else
     <EditForm Model="@city" FormName="DeleteCity" OnValidSubmit="DeleteCityAsync">
         <div class="mb-3">
             <label class="form-label">Nome da Cidade</label>
-            <InputText @bind-Value="Category.Title" class="form-control" readonly/>
+            <InputText @bind-Value="city.City" class="form-control" readonly/>
         </div>
         <button type="submit" class="btn btn-danger mb-1">Excluir</button>
         <a href="/ibge" class="btn btn-success mb-1" role="button">Cancelar</a>
@@ -28,12 +28,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Category = await Context.Ibge.AsNoTracking().FirstOrDefaultAsync(c => c.Id == Id);
+        city = await Context.Ibge.AsNoTracking().FirstOrDefaultAsync(c => c.Id == Id);
     }
 
     public async Task DeleteCityAsync()
     {
-        Context.Categories.Remove(city);
+        Context.Ibge.Remove(city);
         await Context.SaveChangesAsync();
         Navigation.NavigateTo("ibge");
     }
