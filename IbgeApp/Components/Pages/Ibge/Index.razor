@@ -7,6 +7,34 @@
 <h1>Cidades</h1>
 
 <a href="/ibge/create" class="btn btn-primary mb-5 mt-3">Cadastrar Nova Cidade</a>
+@* <div class="container">
+    <div class="mb-3 row">
+        <div class="col">
+            <InputNumber @bind-Value="searchId" class="form-control" placeholder="ID" />
+        </div>
+        <div class="col">
+            <InputText @bind-Value="searchCity" class="form-control" placeholder="City" />
+        </div>
+        <div class="col">
+            <InputText @bind-Value="searchState" class="form-control" placeholder="State" />
+        </div>
+    </div>
+    <div class="align-content-center">
+        <QuickGrid TGridItem="Ibge" Items="@FilteredCities" Pagination="@pagination">
+            <PropertyColumn Property="@(i => i.Id)" Sortable="true" />
+            <PropertyColumn Property="@(i => i.City)" Sortable="true" Title="Cidade" />
+            <PropertyColumn Property="@(i => i.State)" Sortable="true" Title="Estado" />
+            <TemplateColumn Title="">
+                <a href="@("/ibge/edit/" + currentId)" class="btn btn-warning">Editar</a>
+            </TemplateColumn>
+            <TemplateColumn Title="">
+                <a href="@("/ibge/delete/" + currentId)" class="btn btn-danger">Excluir</a>
+            </TemplateColumn>
+        </QuickGrid>
+    </div>
+</div> *@
+
+
 @if(Cities == null)
 {
     <p class="fw-bold text-danger">Nenhum registro encontrado</p>
@@ -18,17 +46,20 @@ else
             <PropertyColumn Property="@(i => i.Id)" Sortable="true" />
             <PropertyColumn Property="@(i => i.City)" Sortable="true" Title="Cidade"/>
             <PropertyColumn Property="@(i => i.State)" Sortable="true" Title="Estado"/>
-            <TemplateColumn Title="">
-                <a href="/edit/" class="btn btn-warning">Editar</a>
+            <TemplateColumn Title="" TGridItem="Ibge">
+                <a href="@("/ibge/details/" + context.Id)" class="btn btn-secondary">Detalhes</a>
+            </TemplateColumn>
+            <TemplateColumn Title="" TGridItem="Ibge">
+                <a href="@("/ibge/edit/" + context.Id)" class="btn btn-warning">Editar</a>
             </TemplateColumn>
             <TemplateColumn Title="">
-                <a href="/delete/" class="btn btn-danger">Excluir</a>
+                <a href=@("/ibge/delete/" + context.Id) class="btn btn-danger">Excluir</a>
             </TemplateColumn>
         </QuickGrid>
     </div>
-    <div class="pagination mx-3">
-        Cidades : 
-        <select @bind="@pagination.ItemsPerPage">
+    <div class="pagination align-content-center">
+        Cidades :
+        <select @bind="@pagination.ItemsPerPage" class="form-select">
             <option selected>20</option>
             <option>50</option>
             <option>100</option>
@@ -38,9 +69,20 @@ else
 }
 
 @code {
-    //public Ibge Cities = new();
+
     public IEnumerable<Ibge>? Ibges { get; set; }
     public IQueryable<Ibge>? Cities { get; set; }
+
+    public IQueryable<Ibge>? FilteredCities { get; set; }
+
+    public int searchId { get; set; }
+    public string searchCity { get; set; }
+    public string searchState { get; set; }
+    public string currentId { get; set; }
+
+    RenderFragment<Ibge> LinkColumnBuilderEdit = item => @<td>
+        <a href="@($"/ibge/edit/{item.Id}")">Editar</a>
+    </td>;
 
     PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
 
@@ -48,6 +90,34 @@ else
     {
         Ibges = await Context.Ibge.AsNoTracking().ToListAsync();
         Cities = Ibges.AsQueryable();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Filter();
+        }
+    }
+
+    private void Filter()
+    {
+        FilteredCities = Cities;
+
+        if (searchId == null)
+        {
+            FilteredCities = FilteredCities.Where(c => c.Id.ToString().Contains(searchId.ToString()));
+        }
+
+        if (!string.IsNullOrEmpty(searchCity))
+        {
+            FilteredCities = FilteredCities.Where(c => c.City.Contains(searchCity));
+        }
+
+        if (!string.IsNullOrEmpty(searchState))
+        {
+            FilteredCities = FilteredCities.Where(c => c.State.Contains(searchState));
+        }
     }
 
 }
