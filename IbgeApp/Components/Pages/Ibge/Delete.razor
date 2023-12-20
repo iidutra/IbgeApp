@@ -1,39 +1,24 @@
-﻿@page "/ibge/edit/{id:int}"
+﻿﻿@page "/ibge/delete/{id:int}"
 @inject ApplicationDbContext Context
 @inject NavigationManager Navigation
 @rendermode InteractiveServer
 
-<h1>Remover Cidade</h1>
-
-@if(city is null)
+@if (city is null)
 {
-<p class="text-center">Cidade não encontrada</p>
-<a href="/categories" class="btn btn-secondary mb-1" role="button">Voltar</a>
+    <p class="text-center">Cidade não encontrada</p>
+    <a href="/categories" class="btn btn-secondary mb-1" role="button">Voltar</a>
 }
 else
 {
-<h3>Editar a Cidade</h3>
-<EditForm Model="@city" FormName="EditCity" OnValidSubmit="EditCityAsync">
-    <div class="mb-3">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-        <label class="form-label">Nome da Cidade</label>
-        <InputText @bind-Value="city.City" class="form-control" />
-        <ValidationMessage For="@(() => city.City)" />
-        
-        <label class="form-label">Selecione o Estado</label>
-        <InputSelect @bind-Value="city.State">
-            @foreach (var state in _states)
-            {
-                <option value="@state.ToString()">@state.ToString()</option>
-            }
-        </InputSelect>
-        <ValidationMessage For="@(() => city.State)" />
-    </div>
-    <br />
-    <button type="submit" class="btn btn-primary mb-1">Salvar</button>
-    <a href="/categories" class="btn btn-danger mb-1" role="button">Cancelar</a>
-</EditForm>
+    <h3>Excluir a Cidade</h3>
+    <EditForm Model="@city" FormName="DeleteCity" OnValidSubmit="DeleteCityAsync">
+        <div class="mb-3">
+            <label class="form-label">Nome da Cidade</label>
+            <InputText @bind-Value="Category.Title" class="form-control" readonly/>
+        </div>
+        <button type="submit" class="btn btn-danger mb-1">Excluir</button>
+        <a href="/ibge" class="btn btn-success mb-1" role="button">Cancelar</a>
+    </EditForm>
 }
 @code {
     [Parameter]
@@ -43,19 +28,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        city = await Context.Ibge.AsNoTracking().FirstOrDefaultAsync(c => c.Id == Id);
+        Category = await Context.Ibge.AsNoTracking().FirstOrDefaultAsync(c => c.Id == Id);
     }
 
-    private static List<string> _states = new List<string>()
+    public async Task DeleteCityAsync()
     {
-        "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA",
-        "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
-        "RS", "RO", "RR", "SC", "SP", "SE", "TO"
-    };
-
-    public async Task EditCityAsync()
-    {
-        Context.Ibge.Update(city);
+        Context.Categories.Remove(city);
         await Context.SaveChangesAsync();
         Navigation.NavigateTo("ibge");
     }
