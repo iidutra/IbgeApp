@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IbgeApp", "IbgeApp\IbgeApp.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IbgeApp.Client", "IbgeApp.Client\IbgeApp.Client.csproj", "{6279EC5D-4377-4B13-9518-003BE6CE5D16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbgeApp.API.Excel", "IbgeApp.API.Excel\IbgeApp.API.Excel.csproj", "{4688BCF6-A17F-47E7-A3EE-21F1DAF678EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6279EC5D-4377-4B13-9518-003BE6CE5D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6279EC5D-4377-4B13-9518-003BE6CE5D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6279EC5D-4377-4B13-9518-003BE6CE5D16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4688BCF6-A17F-47E7-A3EE-21F1DAF678EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4688BCF6-A17F-47E7-A3EE-21F1DAF678EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4688BCF6-A17F-47E7-A3EE-21F1DAF678EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4688BCF6-A17F-47E7-A3EE-21F1DAF678EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

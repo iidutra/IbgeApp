@@ -1,0 +1,6 @@
+@IbgeApp.API.Excel_HostAddress = http://localhost:5051
+
+GET {{IbgeApp.API.Excel_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
