@@ -97,3 +97,8 @@ else
         }
     }
 }
+    private async Task DisplayGreetingAlert() {
+        var authState = await authenticationState;
+        var message = $"Hello {authState.User.Identity.Name}";
+    }
+}

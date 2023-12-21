@@ -1,7 +1,16 @@
-﻿@page "/"
-
-<PageTitle>Home</PageTitle>
-
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+﻿<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Program).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="typeof(MainLayout)">
+                <NotAuthorized>
+                    <!-- Se não autorizado, redirecione para a página de login -->
+                    @if (!context.User.Identity.IsAuthenticated)
+                    {
+                        <RedirectToLogin />
+                    }
+                </NotAuthorized>
+            </AuthorizeRouteView>
+        </Found>
+        <NotFound>...</NotFound>
+    </Router>
+</CascadingAuthenticationState>
