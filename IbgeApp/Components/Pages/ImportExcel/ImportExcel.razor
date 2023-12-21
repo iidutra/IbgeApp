@@ -1,0 +1,61 @@
+﻿@page "/import-excel"
+@using IbgeApp.ViewModel
+@using System.Text.Json
+@inject ImportExcelViewModel ImportExcelVm
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Importar Dados do Excel</PageTitle>
+
+<div class="container import-excel-page">
+    <h3 class="import-excel-title">Importar Dados do Excel</h3>
+    <p class="import-excel-description">Selecione o arquivo Excel para importar os dados.</p>
+
+    @if (ImportExcelVm.IsUploading)
+    {
+        <p>Carregando: @ImportExcelVm.StatusMessage</p>
+    }
+    else
+    {
+        <EditForm Model="@this" class="import-excel-form" FormName="import-excel-formname">
+            <InputFile id="inputFileElementId" class="import-excel-input" />
+            <button @onclick="HandleSubmit" class="import-excel-button">Enviar</button>
+        </EditForm>
+
+        @if (!string.IsNullOrEmpty(ImportExcelVm.StatusMessage))
+        {
+            <p class="import-excel-response">@ImportExcelVm.StatusMessage</p>
+        }
+    }
+</div>
+
+@code {
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            Console.WriteLine("HandleSubmit chamado");
+
+            var fileResult = await JSRuntime.InvokeAsync<JsonElement>("uploadFile", "inputFileElementId");
+
+            if (fileResult.ValueKind != JsonValueKind.Undefined)
+            {
+                var fileData = fileResult.GetProperty("data").GetString();
+                var fileName = fileResult.GetProperty("name").GetString();
+
+                Console.WriteLine($"Dados do arquivo recebidos: {fileName}");
+
+                await ImportExcelVm.UploadFileFromBase64Async(fileData, fileName);
+            }
+            else
+            {
+                Console.WriteLine("Nenhum arquivo selecionado.");
+                ImportExcelVm.StatusMessage = "Por favor, selecione um arquivo para importar.";
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Erro: " + ex.Message);
+            ImportExcelVm.StatusMessage = "Erro ao tentar fazer upload do arquivo.";
+        }
+    }
+}

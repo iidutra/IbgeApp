@@ -14,7 +14,19 @@ CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
 builder.Services.AddDbContext<MunicipioContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:*")
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors();
 
 app.UseRouting();
 
