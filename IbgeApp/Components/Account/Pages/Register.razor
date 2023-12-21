@@ -8,6 +8,7 @@
 @using IbgeApp.Data
 
 @inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
 @inject IUserStore<ApplicationUser> UserStore
 @inject SignInManager<ApplicationUser> SignInManager
 @inject IEmailSender<ApplicationUser> EmailSender
@@ -26,6 +27,12 @@
             <DataAnnotationsValidator />
             <h2>Create a new account.</h2>
             <hr />
+            <ValidationSummary class="text-danger" role="alert" />
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.FullName" class="form-control" autocomplete="fullname" aria-required="true" placeholder="Fulao de tal" />
+                <label for="fullname">Full Name</label>
+                <ValidationMessage For="() => Input.FullName" class="text-danger" />
+            </div>
             <ValidationSummary class="text-danger" role="alert" />
             <div class="form-floating mb-3">
                 <InputText @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
@@ -68,7 +75,7 @@
     public async Task RegisterUser(EditContext editContext)
     {
         var user = CreateUser();
-
+        user.FullName = Input.FullName;
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
         var emailStore = GetEmailStore();
         await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -78,6 +85,20 @@
         {
             identityErrors = result.Errors;
             return;
+        }
+
+        var adminRole = await RoleManager.FindByNameAsync("Administrators");
+        if(adminRole is null)
+        {
+            await RoleManager.CreateAsync(new IdentityRole("Administrators"));
+            await UserManager.AddToRoleAsync(user, "Administrators");
+        } else
+        {
+            var userRole = await RoleManager.FindByIdAsync("Users");
+            if (userRole is null)
+                await RoleManager.CreateAsync(new IdentityRole("Users"));
+
+            await UserManager.AddToRoleAsync(user, "Users");
         }
 
         Logger.LogInformation("User created a new account with password.");
@@ -141,5 +162,6 @@
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = "";
+        public string FullName { get; set; } = "";
     }
 }

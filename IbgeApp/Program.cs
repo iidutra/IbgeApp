@@ -2,7 +2,12 @@ using IbgeApp.Client.Pages;
 using IbgeApp.Components;
 using IbgeApp.Components.Account;
 using IbgeApp.Data;
+<<<<<<< HEAD
 using IbgeApp.ViewModel;
+=======
+using IbgeApp.Interfaces;
+using IbgeApp.Services;
+>>>>>>> ab9fa4505d37395a930b4b5d623e5e2a14b78329
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +27,7 @@ builder.Services.AddScoped<ImportExcelViewModel>();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
+builder.Services.AddScoped<IIbgeService, IbgeService>();
 
 builder.Services.AddAuthentication(options =>
     {
@@ -36,6 +42,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
