@@ -7,22 +7,23 @@
 <h1>Cidades</h1>
 
 <a href="/ibge/create" class="btn btn-primary mb-5 mt-3">Cadastrar Nova Cidade</a>
-<div class="mt-3 mb-5">
+<div class="mt-3 mb-5 align-items-center">
+    <p class="text-danger fw-bold">Use apenas um dos campos para pesquisar</p>
     <EditForm Model="@ibge" OnSubmit="@SearchAsync" FormName="SearchCity">
-        <div class="mb-3 row">
-            <div class="col">
-                <InputText @bind-Value="searchId" class="form-control" placeholder="Informe o Id" />
+            <div class="mb-3 row">
+                <div class="col">
+                    <InputText @bind-Value="searchId" class="form-control" placeholder="Informe o Id" />
+                </div>
+                <div class="col">
+                    <InputText @bind-Value="searchCity" class="form-control" placeholder="Informe a Cidade" />
+                </div>
+                <div class="col">
+                    <InputText @bind-Value="searchState" class="form-control" placeholder="Informe o Estado" />
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Pesquisar</button>
+                </div>
             </div>
-            <div class="col">
-                <InputText @bind-Value="searchCity" class="form-control" placeholder="Informe a Cidade" />
-            </div>
-            <div class="col">
-                <InputText @bind-Value="searchState" class="form-control" placeholder="Informe o Estado" />
-            </div>
-            <div class="col">
-                <button type="submit" class="btn btn-primary">Pesquisar</button>
-            </div>
-        </div>
     </EditForm>
 </div>
 
@@ -49,9 +50,9 @@ else
             </TemplateColumn>
         </QuickGrid>
     </div>
-    <div class="pagination align-content-center">
-        Cidades :
-        <select @bind="@pagination.ItemsPerPage" class="form-select">
+    <div class="pagination mt-3">
+        Quantidade por página:
+        <select @bind="@pagination.ItemsPerPage" class="form-select-sm">
             <option selected>20</option>
             <option>50</option>
             <option>100</option>
