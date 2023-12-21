@@ -1,0 +1,40 @@
+﻿@page "/ibge/delete/{id:int}"
+@inject ApplicationDbContext Context
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+@if (city is null)
+{
+    <p class="text-center">Cidade não encontrada</p>
+    <a href="/categories" class="btn btn-secondary mb-1" role="button">Voltar</a>
+}
+else
+{
+    <h3>Excluir a Cidade</h3>
+    <EditForm Model="@city" FormName="DeleteCity" OnValidSubmit="DeleteCityAsync">
+        <div class="mb-3">
+            <label class="form-label">Nome da Cidade</label>
+            <InputText @bind-Value="city.City" class="form-control" readonly/>
+        </div>
+        <button type="submit" class="btn btn-danger mb-1">Excluir</button>
+        <a href="/ibge" class="btn btn-success mb-1" role="button">Cancelar</a>
+    </EditForm>
+}
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public Ibge? city { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        city = await Context.Ibge.AsNoTracking().FirstOrDefaultAsync(c => c.Id == Id);
+    }
+
+    public async Task DeleteCityAsync()
+    {
+        Context.Ibge.Remove(city);
+        await Context.SaveChangesAsync();
+        Navigation.NavigateTo("ibge");
+    }
+}
