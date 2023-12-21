@@ -2,12 +2,9 @@ using IbgeApp.Client.Pages;
 using IbgeApp.Components;
 using IbgeApp.Components.Account;
 using IbgeApp.Data;
-<<<<<<< HEAD
 using IbgeApp.ViewModel;
-=======
 using IbgeApp.Interfaces;
 using IbgeApp.Services;
->>>>>>> ab9fa4505d37395a930b4b5d623e5e2a14b78329
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
